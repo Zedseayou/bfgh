@@ -34,4 +34,34 @@ precinct <- st_read(here::here("data", "Precincts", "Precincts.shp"))
 vtds <- st_read(here::here("data", "VTDs", "VTDs.shp"))
 ```
 
+# Harris County
+Focus on Harris County since it contains most of the Houston area. Filter the 
+
+```{r harris_shp}
+harris_p <- precinct %>% filter(CNTY == 201)
+harris_v <- vtds %>% filter(CNTY == 201)
+plot(harris_p$geometry)
+```
+
+```{r harris_vtr}
+load_harris <- function(){
+  csvs <- here::here("data", "Harris_County", "All HC Voters") %>%
+    list.files(full.names = TRUE) %>%
+    map(read_csv, col_types = "ccicccccccic")
+  # nobs <- map_int(csvs, nrow)
+  ncongr <- c(02, 07, 08, 09, 10, 18, 22, 29)
+  for (i in length(csvs)){
+    nobs
+    csvs[[i]]$congr <- ncongr[1]
+  }
+  out <- bind_rows(csvs)
+}
+hc <- load_harris()
+hc_tidy <- hc %>%
+  set_colnames(str_to_lower(colnames(.))) %>%
+  set_colnames(str_replace())
+
+write_rds(hc, here::here("data", "Harris_County", "all_voters.rds"), compress = "xz")
+
+```
 
