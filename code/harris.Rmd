@@ -1,0 +1,37 @@
+---
+title: "Matching Registered Voters to Census Block Data"
+author: "Calum You"
+date: "21st February, 2018"
+output:
+  html_notebook:
+    highlight: tango
+    mathjax: null
+    number_sections: yes
+    theme: spacelab
+    toc: yes
+    toc_float: yes
+---
+
+# Introduction
+This is a notebook to document the combining of Harris County voter records with census block data
+
+# Setup
+Load required packages
+```{r setup}
+library(tidyverse)
+library(sf)
+library(magrittr)
+```
+
+# Exploration
+Input and look at the available data to see what we have.
+We have:
+
+* Precinct shapefiles - boundaries on which vote shares are reported.
+* Voting district shapefiles - some kind of method of matching precincts to census blocks.
+```{r input}
+precinct <- st_read(here::here("data", "Precincts", "Precincts.shp"))
+vtds <- st_read(here::here("data", "VTDs", "VTDs.shp"))
+```
+
+
